@@ -1,8 +1,35 @@
 import { useState } from "react";
 import Square from "./Square";
+import GetWinner from "./winnerCheck";
+
 export default function Board() {
-    const [board, setBoard] = useState(Array(9).fill("X"));
-    const HandleSquareClick = (index) => {};
+    const [playerTurn, setPlayerTurn] = useState("X");
+    const [board, setBoard] = useState(Array(9).fill(undefined));
+    const [winner, setWinner] = useState();
+    const HandleSquareClick = (index) => {
+        // Board
+        //
+        //
+        //
+        let newBoard = [...board];
+        newBoard[index] = playerTurn;
+        // Winner
+        //
+        //
+        //
+        let tempWinner = GetWinner(newBoard);
+        if (tempWinner) {
+            setWinner(tempWinner);
+            setPlayerTurn(undefined);
+            setBoard(Array(9).fill(tempWinner));
+            return;
+        }
+        // Updating the Board and Player Turn if the Game is still running
+        setBoard(newBoard);
+        //
+        //
+        setPlayerTurn(playerTurn == "X" ? "O" : "X");
+    };
     return (
         <div className=" border-2 border-black w-135 justify-around p-3 gap-3 rounded-xl h-100 flex">
             <div
@@ -17,6 +44,7 @@ export default function Board() {
                             ExternalHandleClick={() => {
                                 HandleSquareClick(index);
                             }}
+                            isgameEnded={winner ? true : false}
                         />
                     );
                 })}
