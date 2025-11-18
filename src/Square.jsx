@@ -12,7 +12,7 @@ export default function Square({ value, ExternalHandleClick, isgameEnded }) {
     const timeLine = gsap.timeline();
 
     const HandleClick = () => {
-        if (!isClicked) {
+        if (!value) {
             timeLine.to(parentRef.current, {
                 duration: 0.1,
                 rotate: "+=20",
@@ -70,8 +70,8 @@ export default function Square({ value, ExternalHandleClick, isgameEnded }) {
             onClick={HandleClick}
             className="parent hover:[&>.child]:scale-115 rounded-xl min-w-22 max-w-23 h-18  flex-2"
         >
-            <div className="child border-2 rounded-xl transition-all duration-300 flex justify-center h-full items-center text-6xl font-[seguo]">
-                {isClicked || isgameEnded ? value : undefined}
+            <div className="child border-2 rounded-xl transition-all duration-300 flex justify-center h-full items-center text-6xl font-[seguo] dark:bg-gray-800 dark:text-blue-200 dark:border-b-blue-200">
+                {value || isgameEnded ? value : undefined}
             </div>
         </div>
     );
